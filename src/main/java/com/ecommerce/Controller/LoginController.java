@@ -39,19 +39,19 @@ public class LoginController {
         
         if (userOptional.isEmpty()) {
             System.out.println("E-mail not found");
-            redirectAttributes.addFlashAttribute("error", "User/Email not found");
-            return "redirect:/";
+            redirectAttributes.addFlashAttribute("error", "E-mail nao cadastrado!");
+            return "redirect:/signin";
         }
 
         User user = userOptional.get();
 
         if (!user.getPassword().equals(password)) {
             System.out.println("Invalid Password");
-            redirectAttributes.addFlashAttribute("error", "Invalid Password!");
-            return "redirect:/";
+            redirectAttributes.addFlashAttribute("error", "Senha invalida!");
+            return "redirect:/signin";
         }
 
-        redirectAttributes.addFlashAttribute("sucess", "User accepted");
+        redirectAttributes.addFlashAttribute("sucess", "Login efetuado com sucesso!");
 
         return "redirect:/";
     }
