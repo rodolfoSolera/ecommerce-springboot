@@ -1,15 +1,15 @@
-package com.ecommerce.Controller;
+package com.ecommerce.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class CategoryController {
+public class DashboardController {
 
-    @GetMapping("/category")
-    public String category(Model model) {
-        model.addAttribute("adminSection","category");
+    @GetMapping("/dashboard")
+    public String dashboard(Model model) {
+        model.addAttribute("adminSection","dashboard");
         return "admin";
     }
 }

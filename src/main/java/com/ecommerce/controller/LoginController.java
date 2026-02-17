@@ -1,4 +1,4 @@
-package com.ecommerce.Controller;
+package com.ecommerce.controller;
 
 import java.util.Optional;
 
@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.ecommerce.User;
-import com.ecommerce.Repository.UserRepository;
+import com.ecommerce.repository.UserRepository;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;

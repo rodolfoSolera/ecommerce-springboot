@@ -1,13 +1,12 @@
-package com.ecommerce.Controller;
+package com.ecommerce.controller;
 
-import com.ecommerce.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.ecommerce.User;
-import com.ecommerce.Repository.UserRepository;
+import com.ecommerce.repository.UserRepository;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 

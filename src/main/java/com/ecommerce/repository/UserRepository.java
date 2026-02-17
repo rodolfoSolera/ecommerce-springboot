@@ -1,4 +1,4 @@
-package com.ecommerce.Repository;
+package com.ecommerce.repository;
 
 import java.util.Optional;
 
