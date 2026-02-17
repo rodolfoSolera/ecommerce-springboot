@@ -1,7 +1,7 @@
 package com.ecommerce.repository;
 
-import com.ecommerce.Category;
-import com.ecommerce.Product;
+import com.ecommerce.entity.Category;
+import com.ecommerce.entity.Product;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

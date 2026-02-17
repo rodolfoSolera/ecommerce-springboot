@@ -1,7 +1,7 @@
 package com.ecommerce.controller;
 
-import com.ecommerce.Category;
-import com.ecommerce.Product;
+import com.ecommerce.entity.Category;
+import com.ecommerce.entity.Product;
 import com.ecommerce.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

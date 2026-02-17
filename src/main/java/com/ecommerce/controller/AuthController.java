@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.ecommerce.User;
+import com.ecommerce.entity.User;
 import com.ecommerce.repository.UserRepository;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
-public class LoginController {
+public class AuthController {
     
     @Autowired
     public UserRepository userRepository;

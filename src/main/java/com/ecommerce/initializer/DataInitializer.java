@@ -1,10 +1,12 @@
-package com.ecommerce.repository;
+package com.ecommerce.initializer;
 
-import com.ecommerce.Category;
-import com.ecommerce.Product;
-import com.ecommerce.User;
-import com.ecommerce.User.UserStatus;
+import com.ecommerce.entity.Category;
+import com.ecommerce.entity.Product;
+import com.ecommerce.entity.User;
+import com.ecommerce.entity.User.UserStatus;
 
+import com.ecommerce.repository.ProductRepository;
+import com.ecommerce.repository.UserRepository;
 import org.jspecify.annotations.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

@@ -1,4 +1,4 @@
-package com.ecommerce;
+package com.ecommerce.entity;
 
 public enum Category {
     ELETRONICS("Eletrônicos", "fa-mobile-alt"),
