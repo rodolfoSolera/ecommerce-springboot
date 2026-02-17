@@ -30,9 +30,8 @@ O projeto segue o padrão de **arquitetura em camadas**, separando responsabilid
 - **Controller** → Recebe requisições HTTP
 - **Service** → Contém a regra de negócio
 - **Repository** → Comunicação com o banco de dados
-- **Model / Entity** → Representação das tabelas
-- **DTO** → Transferência de dados entre camadas
-- **Config** → Configurações de segurança, inicialização e beans
+- **Entity** → Representação das tabelas
+- **Initializer** → Base de dados ficticios
 
 ---
 
@@ -43,19 +42,19 @@ Abaixo está a estrutura principal do projeto:
 
 ### 📁 Pacotes
 
-- [`controller`](src/main/java/com/seuprojeto/controller)  
+- [`controller`](src/main/java/com/ecommerce/controller)  
   Controllers responsáveis por rotas web e APIs REST.
 
-- [`entity`](src/main/java/com/seuprojeto/entity)  
+- [`entity`](src/main/java/com/ecommerce/entity)  
   Entidades JPA (Hibernate) mapeadas para o banco de dados.
 
-- [`initializer`](src/main/java/com/seuprojeto/initializer)  
+- [`initializer`](src/main/java/com/ecommerce/initializer)  
   Base de dados ficticios.
 
-- [`repository`](src/main/java/com/seuprojeto/repository)  
+- [`repository`](src/main/java/com/ecommerce/repository)  
   Interfaces JPA para acesso aos dados.
 
-- [`service`](src/main/java/com/seuprojeto/service)  
+- [`service`](src/main/java/com/ecommerce/service)  
   Regras de negócio da aplicação.
 
 ---
@@ -89,7 +88,7 @@ O projeto está sendo desenvolvido com base em **issues**, abordando:
 
 ### Pré-requisitos
 - Java 25
-- Maven
+- Gradle
 - PostgreSQL (ou Docker)
 
 ### Executar localmente
