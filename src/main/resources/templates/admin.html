@@ -239,7 +239,7 @@
                             <option value="">Selecione uma categoria</option>
                             <option th:each="category : ${categories}"
                                     th:value="${category.name}"
-                                    th:text="${category.description}"
+                                    th:text="${category.description}">
                             </option>
                         </select>
                     </div>
@@ -281,7 +281,7 @@
                             <option th:each="category : ${categories}"
                                     th:value="${category.name}"
                                     th:text="${category.description}"
-                                    th:selected="${categoriesFilter == category}"
+                                    th:selected="${categoriesFilter == category}">
                             </option>
                         </select>
                     </div>
@@ -466,12 +466,13 @@
                 <div class="admin-filters">
                     <div class="filter-group">
                         <input type="text" id="search-usuarios" placeholder="Buscar usuários..." class="admin-input">
-                        <select id="filter-status" class="admin-select" onchange="window.location.href = 'admin.html' + (this.value ? '?status=' + encodeURIComponent(this.value) : '')">
+                        <select id="filter-status" class="admin-select" onchange="window.location.href = '/user' + (this.value ? '?status=' + encodeURIComponent(this.value) : '')">
                             <option value="" selected>Todos os status</option>
-                            <option value="ACTIVE">Ativo</option>
-                            <option value="INACTIVE">Inativo</option>
-                            <option value="BLOCKED">Bloqueado</option>
-                            <option value="SUSPENDED">Suspenso</option>
+                            <option th:each="status : ${status}"
+                                    th:value="${status.name}"
+                                    th:text="${status.description}"
+                                    th:selected="${statusFilter == status}">
+                            </option>
                         </select>
                     </div>
                 </div>
