@@ -12,4 +12,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
  Optional<User> findByEmail(String email);
 
+ Iterable<User> findByStatus(User.UserStatus status);
+
 }
