@@ -2,6 +2,7 @@ package com.ecommerce.controller;
 
 import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
+import com.ecommerce.entity.User;
 import com.ecommerce.repository.ProductRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,19 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model, HttpSession session, @RequestParam(required = false) Category category) {
-        model.addAttribute("title","Super loja ONLINE!");
+        model.addAttribute("title","Super loja Online!");
         model.addAttribute("categories", Category.values());
         model.addAttribute("categoriesFilter", category !=null ? category : "ALL" );
 
+        User currentUser = (User) session.getAttribute("currentUser");
+        model.addAttribute("currentUser", session.getAttribute("currentUser"));
+
         if (session.getAttribute("currentUser") != null) {
             model.addAttribute("currentUser", session.getAttribute("currentUser"));
+        }
+
+        if (session.getAttribute("shoppingCart") != null) {
+            model.addAttribute("shoppingCart", session.getAttribute("shoppingCart"));
         }
 
         Iterable<Product> products;
