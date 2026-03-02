@@ -34,6 +34,12 @@ public class HomeController {
             model.addAttribute("shoppingCart", session.getAttribute("shoppingCart"));
         }
 
+        if (session.getAttribute("shoppingCartView") != null) {
+            model.addAttribute("shoppingCartView", session.getAttribute("shoppingCartView"));
+            model.addAttribute("cartTotalItems", session.getAttribute("cartTotalItems"));
+            model.addAttribute("cartTotalValue", session.getAttribute("cartTotalValue"));
+        }
+
         Iterable<Product> products;
 
         if (category != null) {

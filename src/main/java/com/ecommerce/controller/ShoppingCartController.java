@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 @RequestMapping("/cart")
@@ -49,6 +47,67 @@ public class ShoppingCartController {
         System.out.println("Total items in cart: " + shoppingCart.size());
 
         return "redirect:/";
+    }
+
+    @GetMapping("/view")
+    public String viewCart(HttpSession session) {
+        if (session.getAttribute("currentUser") == null) {
+            System.out.println("User not logged in. Redirecting to SignIn.");
+            return "redirect:/signin";
+        }
+
+        List<Product> shoppingCart = (List<Product>) session.getAttribute("shoppingCart");
+
+        Map<Long, CartItemView> cartItemsMap = new HashMap<>();
+        for (Product product : shoppingCart) {
+            if (cartItemsMap.containsKey(product.getId())) {
+                System.out.println("Incrementando produto ID: " + product.getId());
+                CartItemView item = cartItemsMap.get(product.getId());
+                item.incrementQuantity();
+            } else {
+                cartItemsMap.put(product.getId(), new CartItemView(product,1));
+            }
+        }
+
+        List<CartItemView> cartItems = new ArrayList<>(cartItemsMap.values());
+
+        int totalItems = shoppingCart.size();
+        Double totalValue = cartItems.stream()
+                .map(CartItemView::getSubTotal)
+                .reduce(0.0, Double::sum);
+
+        session.setAttribute("shoppingCartView", cartItems);
+        session.setAttribute("cartTotalItems", totalItems);
+        session.setAttribute("cartTotalValue", totalValue);
+
+        return "redirect:/";
+    }
+
+    public static class CartItemView {
+
+        private final Product product;
+        private int quantity;
+
+        public CartItemView(Product product, int quantity) {
+            this.product = product;
+            this.quantity = quantity;
+        }
+
+        public void incrementQuantity() {
+            this.quantity++;
+        }
+
+        public Product getProduct() {
+            return product;
+        }
+
+        public int getQuantity() {
+            return quantity;
+        }
+
+        public Double getSubTotal() {
+            return product.getPrice() * quantity;
+        }
     }
 
 }
