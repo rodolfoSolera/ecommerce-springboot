@@ -57,7 +57,7 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="hero" id="home">
+    <section class="hero" id="home" th:if="${shoppingCartView == null}">
         <div class="hero-container">
             <h2 th:text="${title}">Sua Loja Online Completa</h2>
             <p>Descubra produtos incríveis com os melhores preços e entrega rápida. Tecnologia e qualidade em um só lugar.</p>
@@ -66,8 +66,7 @@
     </section>
 
     <!-- Shopping Cart Section (hidden by default) -->
-    <!-- ⚠️ THYMELEAF: Remover style="display: none;" e adicionar th:if="${shoppingCartView != null}" -->
-    <section class="cart-section" style="display: none;" id="cart-section">
+    <section class="cart-section" th:if="${shoppingCartView != null}" id="cart-section">
         <div class="container">
             <div class="admin-card">
                 <div class="card-header">
@@ -81,20 +80,20 @@
                     <form class="form-grid three-columns">
                         <div class="form-group">
                             <label for="cart-user">Usuário</label>
-                            <input type="text" id="cart-user" value="João Silva" readonly>
+                            <input type="text" id="cart-user" th:value="${currentUser.firstName}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="cart-items">Total de Itens</label>
-                            <input type="text" id="cart-items" value="3" readonly>
+                            <input type="text" id="cart-items" th:value="${cartTotalItems}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="cart-total">Valor Total</label>
-                            <input type="text" id="cart-total" value="R$ 3.497,00" readonly>
+                            <input type="text" id="cart-total" th:value="'R$ ' + ${#numbers.formatDecimal(cartTotalValue, 1, 2)}" readonly>
                         </div>
                     </form>
 
                     <!-- Cart Items Table -->
-                    <div style="margin-top: 2rem;">
+                    <div th:if="${shoppingCartView != null and !shoppingCartView.isEmpty()}" style="margin-top: 2rem;">
                         <table class="admin-table">
                             <thead>
                                 <tr>
@@ -105,17 +104,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Smartphone Galaxy S21</td>
-                                    <td>R$ 1.299,00</td>
-                                    <td>1</td>
-                                    <td>R$ 1.299,00</td>
-                                </tr>
-                                <tr>
-                                    <td>Notebook Dell Inspiron</td>
-                                    <td>R$ 2.199,00</td>
-                                    <td>1</td>
-                                    <td>R$ 2.199,00</td>
+                                <tr th:each="item : ${session.shoppingCartView}">
+                                    <td th:text="${item.product.name}"></td>
+                                    <td th:text="'R$ ' + ${#numbers.formatDecimal(item.product.price, 1, 2)}"></td>
+                                    <td th:text="${item.quantity}"></td>
+                                    <td th:text="'R$ ' + ${#numbers.formatDecimal(item.subTotal, 1, 2)}"></td>
                                 </tr>
                             </tbody>
                         </table>
