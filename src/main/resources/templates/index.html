@@ -115,8 +115,7 @@
                     </div>
 
                     <!-- Empty Cart Message (hidden by default) -->
-                    <!-- ⚠️ THYMELEAF: Remover style="display: none;" e adicionar th:if="${shoppingCartView == null or shoppingCartView.isEmpty()}" -->
-                    <div class="cart-empty" style="display: none;">
+                    <div class="cart-empty" th:if="${shoppingCartView == null or shoppingCartView.isEmpty()}">
                         <i class="fas fa-shopping-cart" style="font-size: 64px; color: var(--text-secondary);"></i>
                         <p>Seu carrinho está vazio</p>
                     </div>
@@ -126,7 +125,7 @@
                         <a href="#produtos" class="btn btn-outline">
                             <i class="fas fa-arrow-left"></i> Comprar Mais
                         </a>
-                        <a href="checkout.html" class="btn btn-primary">
+                        <a th:href="@{/order/checkout}" class="btn btn-primary" th:if="${cartTotalItems > 0}">
                             <i class="fas fa-check"></i> Finalizar Pedido
                         </a>
                     </div>
