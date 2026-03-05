@@ -1,8 +1,13 @@
 package com.ecommerce.controller;
 
+import com.ecommerce.entity.Order;
+import com.ecommerce.entity.OrderItem;
 import com.ecommerce.entity.User;
+import com.ecommerce.repository.OrderRepository;
+import com.ecommerce.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.h2.engine.Mode;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +19,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/order")
 public class OrderController {
+
+    @Autowired
+    public OrderRepository orderRepository;
 
     @GetMapping
     public String order(Model model) {
@@ -87,6 +95,22 @@ public class OrderController {
 
         Integer cartTotalItems = (Integer) session.getAttribute("cartTotalItems");
         Double cartTotalValue = (Double) session.getAttribute("cartTotalValue");
+
+        Order order = new Order(currentUser, cartTotalValue, cartTotalItems);
+        order.setPaymentMethod(Order.PaymentMethod.PIX);
+        order.setStatus(Order.OrderStatus.PENDING);
+
+        for (ShoppingCartController.CartItemView itemView : checkoutView) {
+            OrderItem item = new OrderItem(
+                    itemView.getProduct(),
+                    itemView.getProduct().getPrice(),
+                    itemView.getQuantity(),
+                    itemView.getSubTotal()
+            );
+            order.addItem(item);
+        }
+
+        orderRepository.save(order);
 
         return "redirect:/order/success";
     }
