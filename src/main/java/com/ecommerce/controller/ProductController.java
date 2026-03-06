@@ -2,7 +2,9 @@ package com.ecommerce.controller;
 
 import com.ecommerce.entity.Category;
 import com.ecommerce.entity.Product;
+import com.ecommerce.entity.User;
 import com.ecommerce.repository.ProductRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +20,15 @@ public class ProductController {
     private ProductRepository productRepository;
 
     @GetMapping("/product")
-    public String product(Model model, @RequestParam(required = false) Category category) {
+    public String product(Model model, @RequestParam(required = false) Category category, HttpSession session) {
+
+        if (session.getAttribute("currentUser") == null) {
+            System.out.println("User not logged in. Redirecting to SignIn.");
+            return "redirect:/signin";
+        }
+
+        User currentUser = (User) session.getAttribute("currentUser");
+
         if (model.containsAttribute("adminSection")) {
             model.addAttribute("adminSection", model.getAttribute("adminSection"));
         } else {
@@ -42,6 +52,7 @@ public class ProductController {
         model.addAttribute("categoriesFilter", category != null ? category : "ALL");
         model.addAttribute("categories", Category.values());
         model.addAttribute("products", products);
+        model.addAttribute("currentUser", currentUser);
         return "admin";
     }
 

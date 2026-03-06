@@ -33,21 +33,21 @@
                 </a>
                 <div class="dropdown">
                     <button class="btn btn-outline dropdown-toggle" id="profile-dropdown">
-                        <i class="fas fa-user"></i> <span th:text="${currentUser != null ? currentUser.firstName : 'Entrar'}">Entrar</span> <i class="fas fa-chevron-down"></i>
+                        <i class="fas fa-user"></i> <span th:text="${currentUser != null ? currentUser.firstName : 'Entrar'}"></span> <i class="fas fa-chevron-down"></i>
                     </button>
                     <div class="dropdown-menu" id="dropdown-menu">
-                        <a th:href="@{/signin}" class="dropdown-item">
+                        <a th:href="@{/signin}" class="dropdown-item" th:if="${currentUser == null}">
                             <i class="fas fa-sign-in-alt"></i> Fazer Login
                         </a>
-                        <a th:href="@{/signup}" class="dropdown-item">
+                        <a th:href="@{/signup}" class="dropdown-item" th:if="${currentUser == null}">
                             <i class="fas fa-user-plus"></i> Criar Conta
                         </a>
-                        <hr class="dropdown-divider">
+                        <hr class="dropdown-divider" th:if="${currentUser == null}">
                         <a th:href="@{/dashboard}" class="dropdown-item">
                             <i class="fas fa-cogs"></i> Área Administrativa
                         </a>
-                        <hr class="dropdown-divider">
-                        <a th:href="@{/logout}" class="dropdown-item">
+                        <hr class="dropdown-divider" th:if="${currentUser != null}">
+                        <a th:href="@{/logout}" class="dropdown-item" th:if="${currentUser != null}">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
                     </div>

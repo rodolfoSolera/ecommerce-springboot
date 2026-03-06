@@ -24,8 +24,16 @@ public class OrderController {
     public OrderRepository orderRepository;
 
     @GetMapping
-    public String order(Model model) {
+    public String order(Model model, HttpSession session) {
+        if (session.getAttribute("currentUser") == null) {
+            System.out.println("User not logged in. Redirecting to SignIn.");
+            return "redirect:/signin";
+        }
+
+        User currentUser = (User) session.getAttribute("currentUser");
+
         model.addAttribute("adminSection","order");
+        model.addAttribute("currentUser", currentUser);
         return "admin";
     }
 
@@ -41,7 +49,7 @@ public class OrderController {
 
         if (shoppingCartView == null || shoppingCartView.isEmpty()) {
             System.out.println("Cart is empty. Redirecting to home.");
-            return "redirec:/";
+            return "redirect:/";
         }
 
         session.setAttribute("checkoutView", shoppingCartView);
@@ -112,11 +120,35 @@ public class OrderController {
 
         orderRepository.save(order);
 
+        session.setAttribute("orderSuccess", true);
+        session.setAttribute("orderId", order.getId());
+
         return "redirect:/order/success";
     }
 
     @GetMapping("success")
     public String orderSuccess(Model model, HttpSession session) {
+        if (session.getAttribute("currentUser") == null) {
+            System.out.println("User not logged in. Redirecting to SignIn.");
+            return "redirect:/signin";
+        }
+
+        User currentUser = (User) session.getAttribute("currentUser");
+        Boolean orderSuccess = (Boolean) session.getAttribute("orderSuccess");
+        Long orderId = (Long) session.getAttribute("orderId");
+
+        if (orderSuccess == null || !orderSuccess) {
+            return "redirect:/";
+        }
+
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("orderId",orderId);
+
+        session.removeAttribute("orderSuccess");
+        session.removeAttribute("orderId");
+        session.removeAttribute("shoppingCart");
+        session.removeAttribute("shoppingCartView");
+        session.removeAttribute("cartTotalItems");
 
         return "order-success";
     }
