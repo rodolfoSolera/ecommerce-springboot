@@ -28,7 +28,7 @@
                 </button>
                 <div class="admin-user-info">
                     <i class="fas fa-user-shield"></i>
-                    <span>João Silva</span>
+                    <span th:text="${currentUser != null ? currentUser.firstName : 'Entrar'}"></span>
                 </div>
                 <a th:href="@{/}" class="btn btn-outline btn-small">
                     <i class="fas fa-arrow-left"></i> Voltar ao Site

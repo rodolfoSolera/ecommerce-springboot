@@ -56,9 +56,12 @@ public class ShoppingCartController {
             return "redirect:/signin";
         }
 
-        List<Product> shoppingCart =
-                Optional.ofNullable((List<Product>) session.getAttribute("shoppingCart"))
-                        .orElse(new ArrayList<>());
+        List<Product> shoppingCart = (List<Product>) session.getAttribute("shoppingCart");
+
+        if (shoppingCart == null) {
+            System.out.println("Not products");
+            return "redirect:/";
+        }
 
         Map<Long, CartItemView> cartItemsMap = new HashMap<>();
         for (Product product : shoppingCart) {
