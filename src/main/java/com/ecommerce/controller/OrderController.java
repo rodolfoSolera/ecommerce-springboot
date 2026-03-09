@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class OrderController {
     public OrderRepository orderRepository;
 
     @GetMapping
-    public String order(Model model, HttpSession session) {
+    public String order(Model model, @RequestParam(required = false) Order.OrderStatus status, HttpSession session) {
         if (session.getAttribute("currentUser") == null) {
             System.out.println("User not logged in. Redirecting to SignIn.");
             return "redirect:/signin";
@@ -32,6 +33,17 @@ public class OrderController {
 
         User currentUser = (User) session.getAttribute("currentUser");
 
+        Iterable<Order> orders;
+
+        if (status != null) {
+            orders = orderRepository.findAllByStatusAndUserId(status, currentUser.getId());
+        } else {
+            orders = orderRepository.findAllByUserId(currentUser.getId());
+        }
+
+        model.addAttribute("ordersFilter", status != null ? status : "ALL");
+        model.addAttribute("status", Order.OrderStatus.values());
+        model.addAttribute("orders", orders);
         model.addAttribute("adminSection","order");
         model.addAttribute("currentUser", currentUser);
         return "admin";
@@ -103,11 +115,7 @@ public class OrderController {
 
         Integer cartTotalItems = (Integer) session.getAttribute("cartTotalItems");
         Double cartTotalValue = (Double) session.getAttribute("cartTotalValue");
-
         Order order = new Order(currentUser, cartTotalValue, cartTotalItems);
-        order.setPaymentMethod(Order.PaymentMethod.PIX);
-        order.setStatus(Order.OrderStatus.PENDING);
-
         for (ShoppingCartController.CartItemView itemView : checkoutView) {
             OrderItem item = new OrderItem(
                     itemView.getProduct(),
