@@ -44,6 +44,13 @@ public class Order {
         this.user = user;
         this.totalValue = totalValue;
         this.totalItems = totalItems;
+        created();
+    }
+
+    public void created() {
+        this.createdAt = LocalDateTime.now();
+        this.status = OrderStatus.PENDING;
+        this.paymentMethod = PaymentMethod.PIX;
     }
 
     public void addItem(OrderItem item) {

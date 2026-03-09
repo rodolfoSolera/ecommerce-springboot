@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends CrudRepository<Order, Long> {
-    List<Order> findByUserId(Long userId);
+    Iterable<Order> findAllByUserId(Long userId);
+    Iterable<Order> findAllByStatusAndUserId(Order.OrderStatus status, Long userId);
 }

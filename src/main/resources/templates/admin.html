@@ -496,7 +496,7 @@
                                 <td th:text="${user.email}" ></td>
                                 <td th:text="${user.phone}" ></td>
                                 <td th:text="${user.status.description}" ></td>
-                                <td th:text="${#temporals.format(user.createdAt, 'dd/MMM/yyyy HH:mm',T(java.util.Locale).forLanguageTag('pt-BR'))}"></td>
+                                <td th:text="${#temporals.format(user.createdAt, 'dd/MM/yyyy HH:mm',T(java.util.Locale).forLanguageTag('pt-BR'))}"></td>
                                 <td class="action-buttons">
                                     <a th:href="@{/user/edit/{id}(id=${user.id})}" class="btn-icon btn-edit" title="Editar">
                                         <i class="fas fa-edit"></i>
@@ -512,7 +512,6 @@
             </section>
 
             <!-- Pedidos Section -->
-            <!-- ⚠️ THYMELEAF: Remover style="display:none" e adicionar th:if="${adminSection == 'order'}" -->
             <section id="pedidos-section" th:if="${adminSection == 'order'}" class="admin-section">
                 <div class="admin-header-section">
                     <h2><i class="fas fa-shopping-cart"></i> Gestão de Pedidos</h2>
@@ -522,14 +521,13 @@
                 <div class="admin-filters">
                     <div class="filter-group">
                         <input type="text" id="search-pedidos" placeholder="Buscar por cliente ou pedido..." class="admin-input">
-                        <select id="filter-status-pedido" class="admin-select" onchange="window.location.href = 'admin.html' + (this.value ? '?status=' + encodeURIComponent(this.value) : '')">
-                            <option value="" selected>Todos os Status</option>
-                            <option value="PENDING">Pendente</option>
-                            <option value="CONFIRMED">Confirmado</option>
-                            <option value="PAID">Pago</option>
-                            <option value="SHIPPED">Enviado</option>
-                            <option value="DELIVERED">Entregue</option>
-                            <option value="CANCELLED">Cancelado</option>
+                        <select id="filter-status-pedido" class="admin-select" onchange="window.location.href = '/order' + (this.value ? '?status=' + encodeURIComponent(this.value) : '')">
+                            <option value="" selected>Todos os status</option>
+                            <option th:each="status : ${status}"
+                                    th:value="${status.name}"
+                                    th:text="${status.description}"
+                                    th:selected="${ordersFilter == status}">
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -549,42 +547,14 @@
                             </tr>
                         </thead>
                         <tbody id="pedidos-tbody">
-                            <tr>
-                                <td>125</td>
-                                <td>Maria Santos</td>
-                                <td>3</td>
-                                <td>R$ 450,00</td>
-                                <td>Entregue</td>
-                                <td>Cartão de Crédito</td>
-                                <td>15/03/2025 14:30</td>
-                                <td class="action-buttons">
-                                    <a href="admin.html" class="btn-icon btn-view" title="Ver Detalhes">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>124</td>
-                                <td>Carlos Oliveira</td>
-                                <td>5</td>
-                                <td>R$ 1.200,00</td>
-                                <td>Em Transporte</td>
-                                <td>PIX</td>
-                                <td>18/03/2025 10:15</td>
-                                <td class="action-buttons">
-                                    <a href="admin.html" class="btn-icon btn-view" title="Ver Detalhes">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>123</td>
-                                <td>Ana Costa</td>
-                                <td>2</td>
-                                <td>R$ 320,00</td>
-                                <td>Cancelado</td>
-                                <td>Boleto</td>
-                                <td>20/03/2025 16:45</td>
+                            <tr th:each="order : ${orders}">
+                                <td th:text="${order.id}" ></td>
+                                <td th:text="${order.user.firstName} + ' ' +${order.user.lastName}" ></td>
+                                <td th:text="${order.totalItems}" ></td>
+                                <td th:text="'R$: ' + ${#numbers.formatDecimal(order.totalValue,3,'POINT',2,'COMMA')}" ></td>
+                                <td th:text="${order.status.description}" ></td>
+                                <td th:text="${order.paymentMethod.description}" ></td>
+                                <td th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm',T(java.util.Locale).forLanguageTag('pt-BR'))}"></td>
                                 <td class="action-buttons">
                                     <a href="admin.html" class="btn-icon btn-view" title="Ver Detalhes">
                                         <i class="fas fa-eye"></i>
