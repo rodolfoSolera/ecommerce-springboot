@@ -551,7 +551,7 @@
                                 <td th:text="${order.id}" ></td>
                                 <td th:text="${order.user.firstName} + ' ' +${order.user.lastName}" ></td>
                                 <td th:text="${order.totalItems}" ></td>
-                                <td th:text="'R$: ' + ${#numbers.formatDecimal(order.totalValue,3,'POINT',2,'COMMA')}" ></td>
+                                <td th:text="'R$ ' + ${#numbers.formatDecimal(order.totalValue,3,'POINT',2,'COMMA')}" ></td>
                                 <td th:text="${order.status.description}" ></td>
                                 <td th:text="${order.paymentMethod.description}" ></td>
                                 <td th:text="${#temporals.format(order.createdAt, 'dd/MM/yyyy HH:mm',T(java.util.Locale).forLanguageTag('pt-BR'))}"></td>
