@@ -1,10 +1,9 @@
 package com.ecommerce.initializer;
 
-import com.ecommerce.entity.Category;
-import com.ecommerce.entity.Product;
-import com.ecommerce.entity.User;
+import com.ecommerce.entity.*;
 import com.ecommerce.entity.User.UserStatus;
 
+import com.ecommerce.repository.OrderRepository;
 import com.ecommerce.repository.ProductRepository;
 import com.ecommerce.repository.UserRepository;
 import org.jspecify.annotations.NonNull;
@@ -23,6 +22,9 @@ public class DataInitializer implements CommandLineRunner {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private OrderRepository orderRepository;
 
 
     @Override
@@ -132,20 +134,211 @@ public class DataInitializer implements CommandLineRunner {
                 )
         );
 
-        userRepository.saveAll(Arrays.asList(
-                
-                // =========================
-                // Users
-                // =========================
-                createUser("Jozias", "da Silva", "jozias@gmail.com", "(47)99974-9304", "Jozias123@", true),
-                createUser("Maria", "Oliveira", "maria.oliveira@gmail.com", "(11)98845-1234", "Maria@123", true),
-                createUser("Carlos", "Pereira", "carlos.pereira@gmail.com", "(21)97766-4321", "Carlos#2024", true),
-                createUser("Ana", "Souza", "ana.souza@gmail.com", "(31)99654-7890", "Ana@Senha1", true),
-                createUser("Fernando", "Lima", "fernando.lima@gmail.com", "(41)98712-3456", "Fer@12345", true),
-                createUser("Juliana", "Mendes", "juliana.mendes@gmail.com", "(51)99543-2109", "JuMendes@9", true)
+        User jozias = createUser("Jozias", "da Silva", "jozias@gmail.com", "(47)99974-9304", "Jozias123@", true);
+        User maria = createUser("Maria", "Oliveira", "maria.oliveira@gmail.com", "(11)98845-1234", "Maria@123", true);
+        User carlos = createUser("Carlos", "Pereira", "carlos.pereira@gmail.com", "(21)97766-4321", "Carlos#2024", true);
+        User ana = createUser("Ana", "Souza", "ana.souza@gmail.com", "(31)99654-7890", "Ana@Senha1", true);
+        User fernando = createUser("Fernando", "Lima", "fernando.lima@gmail.com", "(41)98712-3456", "Fer@12345", true);
+        User juliana = createUser("Juliana", "Mendes", "juliana.mendes@gmail.com", "(51)99543-2109", "JuMendes@9", true);
+        User admin = createUser("Admin", "System", "admin@admin.com", "(11)99635-2197", "Admin@1234", true);
 
-            )
-        );
+        userRepository.saveAll(Arrays.asList(jozias, maria, carlos, ana, fernando, juliana, admin));
+
+        Iterable<Product> allProducts = productRepository.findAll();
+        Product[] products = new Product[70];
+        int index = 0;
+        for (Product p : allProducts) {
+            products[index++] = p;
+        }
+
+        // Jozias Pedidos
+        orderRepository.save(createOrder(jozias, 4599.00, 1, Order.OrderStatus.DELIVERED, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(25), products[1]));
+
+        orderRepository.save(createOrder(jozias, 2499.80, 2, Order.OrderStatus.PAID, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(20), products[0], products[9]));
+
+        orderRepository.save(createOrder(jozias, 799.80, 2, Order.OrderStatus.SHIPPED, Order.PaymentMethod.DEBIT_CARD,
+                LocalDateTime.now().minusDays(15), products[4], products[5]));
+
+        orderRepository.save(createOrder(jozias, 899.90, 1, Order.OrderStatus.CONFIRMED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(10), products[7]));
+
+        orderRepository.save(createOrder(jozias, 349.80, 2, Order.OrderStatus.DELIVERED, Order.PaymentMethod.BANK_TICKET,
+                LocalDateTime.now().minusDays(5), products[8], products[9]));
+
+        orderRepository.save(createOrder(jozias, 199.90, 1, Order.OrderStatus.PAID, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(2), products[23]));
+
+        //Maria Pedidos
+        orderRepository.save(createOrder(maria, 149.90, 1, Order.OrderStatus.DELIVERED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(28), products[11]));
+
+        orderRepository.save(createOrder(maria, 379.80, 2, Order.OrderStatus.PAID, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(24), products[12], products[16]));
+
+        orderRepository.save(createOrder(maria, 229.90, 1, Order.OrderStatus.SHIPPED, Order.PaymentMethod.DEBIT_CARD,
+                LocalDateTime.now().minusDays(18), products[13]));
+
+        orderRepository.save(createOrder(maria, 199.90, 1, Order.OrderStatus.CONFIRMED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(15), products[14]));
+
+        orderRepository.save(createOrder(maria, 239.80, 2, Order.OrderStatus.DELIVERED, Order.PaymentMethod.BANK_TICKET,
+                LocalDateTime.now().minusDays(12), products[15], products[17]));
+
+        orderRepository.save(createOrder(maria, 99.90, 1, Order.OrderStatus.PAID, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(9), products[18]));
+
+        orderRepository.save(createOrder(maria, 259.80, 2, Order.OrderStatus.SHIPPED, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(6), products[19], products[10]));
+
+        orderRepository.save(createOrder(maria, 189.90, 1, Order.OrderStatus.DELIVERED, Order.PaymentMethod.DEBIT_CARD,
+                LocalDateTime.now().minusDays(3), products[13]));
+
+        //Carlos Pedidos
+        orderRepository.save(createOrder(carlos, 1999.00, 1, Order.OrderStatus.DELIVERED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(40), products[34]));
+
+        orderRepository.save(createOrder(carlos, 488.80, 2, Order.OrderStatus.SHIPPED, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(36), products[30], products[31]));
+
+        orderRepository.save(createOrder(carlos, 89.90, 1, Order.OrderStatus.CONFIRMED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(32), products[35]));
+
+        orderRepository.save(createOrder(carlos, 239.80, 2, Order.OrderStatus.DELIVERED, Order.PaymentMethod.DEBIT_CARD,
+                LocalDateTime.now().minusDays(28), products[36], products[32]));
+
+        orderRepository.save(createOrder(carlos, 159.90, 1, Order.OrderStatus.PAID, Order.PaymentMethod.BANK_TICKET,
+                LocalDateTime.now().minusDays(24), products[36]));
+
+        orderRepository.save(createOrder(carlos, 179.90, 1, Order.OrderStatus.SHIPPED, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(20), products[37]));
+
+        orderRepository.save(createOrder(carlos, 299.90, 1, Order.OrderStatus.DELIVERED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(18), products[38]));
+
+        orderRepository.save(createOrder(carlos, 129.90, 1, Order.OrderStatus.PAID, Order.PaymentMethod.DEBIT_CARD,
+                LocalDateTime.now().minusDays(15), products[39]));
+
+        orderRepository.save(createOrder(carlos, 229.90, 1, Order.OrderStatus.CONFIRMED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(12), products[12]));
+
+        orderRepository.save(createOrder(carlos, 349.90, 1, Order.OrderStatus.DELIVERED, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(9), products[25]));
+
+        orderRepository.save(createOrder(carlos, 599.90, 1, Order.OrderStatus.SHIPPED, Order.PaymentMethod.BANK_TICKET,
+                LocalDateTime.now().minusDays(6), products[26]));
+
+        orderRepository.save(createOrder(carlos, 199.90, 1, Order.OrderStatus.PAID, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(2), products[27]));
+
+        //Ana Pedidos
+        orderRepository.save(createOrder(ana, 2499.00, 1, Order.OrderStatus.DELIVERED, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(50), products[20]));
+
+        orderRepository.save(createOrder(ana, 2298.00, 2, Order.OrderStatus.SHIPPED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(45), products[21], products[22]));
+
+        orderRepository.save(createOrder(ana, 599.90, 1, Order.OrderStatus.PAID, Order.PaymentMethod.DEBIT_CARD,
+                LocalDateTime.now().minusDays(40), products[25]));
+
+        orderRepository.save(createOrder(ana, 5298.00, 2, Order.OrderStatus.CONFIRMED, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(38), products[1], products[3]));
+
+        orderRepository.save(createOrder(ana, 299.90, 1, Order.OrderStatus.DELIVERED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(35), products[33]));
+
+        orderRepository.save(createOrder(ana, 699.80, 2, Order.OrderStatus.SHIPPED, Order.PaymentMethod.BANK_TICKET,
+                LocalDateTime.now().minusDays(30), products[4], products[5]));
+
+        orderRepository.save(createOrder(ana, 1999.00, 1, Order.OrderStatus.PAID, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(28), products[34]));
+
+        orderRepository.save(createOrder(ana, 4599.00, 1, Order.OrderStatus.DELIVERED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(25), products[1]));
+
+        orderRepository.save(createOrder(ana, 398.80, 2, Order.OrderStatus.SHIPPED, Order.PaymentMethod.DEBIT_CARD,
+                LocalDateTime.now().minusDays(22), products[42], products[44]));
+
+        orderRepository.save(createOrder(ana, 249.90, 1, Order.OrderStatus.CONFIRMED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(20), products[8]));
+
+        orderRepository.save(createOrder(ana, 1799.00, 1, Order.OrderStatus.DELIVERED, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(18), products[6]));
+
+        orderRepository.save(createOrder(ana, 329.80, 2, Order.OrderStatus.PAID, Order.PaymentMethod.BANK_TICKET,
+                LocalDateTime.now().minusDays(15), products[10], products[18]));
+
+        orderRepository.save(createOrder(ana, 299.90, 1, Order.OrderStatus.SHIPPED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(12), products[39]));
+
+        orderRepository.save(createOrder(ana, 149.90, 1, Order.OrderStatus.CONFIRMED, Order.PaymentMethod.DEBIT_CARD,
+                LocalDateTime.now().minusDays(9), products[32]));
+
+        orderRepository.save(createOrder(ana, 499.90, 1, Order.OrderStatus.DELIVERED, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(5), products[52]));
+
+        //Fernando Pedidos
+        orderRepository.save(createOrder(fernando, 899.90, 1, Order.OrderStatus.DELIVERED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(30), products[7]));
+
+        orderRepository.save(createOrder(fernando, 299.90, 1, Order.OrderStatus.PAID, Order.PaymentMethod.DEBIT_CARD,
+                LocalDateTime.now().minusDays(26), products[38]));
+
+        orderRepository.save(createOrder(fernando, 1599.80, 2, Order.OrderStatus.SHIPPED, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(22), products[20], products[8]));
+
+        orderRepository.save(createOrder(fernando, 129.90, 1, Order.OrderStatus.CONFIRMED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(18), products[56]));
+
+        orderRepository.save(createOrder(fernando, 449.80, 2, Order.OrderStatus.DELIVERED, Order.PaymentMethod.BANK_TICKET,
+                LocalDateTime.now().minusDays(15), products[41], products[43]));
+
+        orderRepository.save(createOrder(fernando, 399.90, 1, Order.OrderStatus.SHIPPED, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(10), products[37]));
+
+        orderRepository.save(createOrder(fernando, 99.90, 1, Order.OrderStatus.PAID, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(3), products[47]));
+
+        //Juliana Pedidos
+        orderRepository.save(createOrder(juliana, 199.90, 1, Order.OrderStatus.DELIVERED, Order.PaymentMethod.PIX,
+                LocalDateTime.now().minusDays(8), products[50]));
+
+        orderRepository.save(createOrder(juliana, 349.80, 2, Order.OrderStatus.PAID, Order.PaymentMethod.CREDIT_CARD,
+                LocalDateTime.now().minusDays(2), products[51], products[52]));
+
+    }
+
+    private Order createOrder(
+            User user,
+            Double totalValue,
+            Integer totalItems,
+            Order.OrderStatus status,
+            Order.PaymentMethod paymentMethod,
+            LocalDateTime createdAt,
+            Product... products
+    ) {
+
+        Order order = new Order();
+
+        order.setUser(user);
+        order.setTotalValue(totalValue);
+        order.setTotalItems(totalItems);
+        order.setStatus(status);
+        order.setPaymentMethod(paymentMethod);
+        order.setCreatedAt(createdAt);
+
+        for (Product product : products) {
+
+            OrderItem item = new OrderItem();
+            item.setProduct(product);
+            item.setQuantity(1);
+            item.setUnitPrice(product.getPrice());
+
+            order.addItem(item);
+        }
+
+        return order;
     }
 
     private Product createdProduct(String name, Category category, Double price, String description) {

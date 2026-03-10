@@ -32,13 +32,22 @@ public class OrderController {
         }
 
         User currentUser = (User) session.getAttribute("currentUser");
+        boolean isAdmin = "admin@admin.com".equalsIgnoreCase(currentUser.getEmail());
 
         Iterable<Order> orders;
 
-        if (status != null) {
-            orders = orderRepository.findAllByStatusAndUserId(status, currentUser.getId());
+        if (isAdmin) {
+            if (status != null) {
+                orders = orderRepository.findAllByStatus(status);
+            } else {
+                orders = orderRepository.findAll();
+            }
         } else {
-            orders = orderRepository.findAllByUserId(currentUser.getId());
+            if (status != null) {
+                orders = orderRepository.findAllByStatusAndUserId(status, currentUser.getId());
+            } else {
+                orders = orderRepository.findAllByUserId(currentUser.getId());
+            }
         }
 
         model.addAttribute("ordersFilter", status != null ? status : "ALL");

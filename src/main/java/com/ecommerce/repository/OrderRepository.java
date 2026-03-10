@@ -10,4 +10,6 @@ import java.util.List;
 public interface OrderRepository extends CrudRepository<Order, Long> {
     Iterable<Order> findAllByUserId(Long userId);
     Iterable<Order> findAllByStatusAndUserId(Order.OrderStatus status, Long userId);
+
+    Iterable<Order> findAllByStatus(Order.OrderStatus status);
 }
