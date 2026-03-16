@@ -75,7 +75,7 @@
         <main class="admin-main">
 
             <!-- Dashboard Section -->
-            <section id="dashboard-section" th:if="${adminSection == 'dashboard'}" class="admin-section">
+            <section id="dashboard-section" th:if="${adminSection == 'dashboard'}" class="admin-section active">
                 <div class="admin-header-section">
                     <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
                     <p>Visão geral do sistema</p>
@@ -88,7 +88,7 @@
                             <i class="fas fa-box text-primary"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>48</h3>
+                            <h3 th:text="${totalProducts}"></h3>
                             <p>Total de Produtos</p>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                             <i class="fas fa-users text-success"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>234</h3>
+                            <h3 th:text="${totalUsers}"></h3>
                             <p>Usuários Cadastrados</p>
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                             <i class="fas fa-shopping-cart text-warning"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>127</h3>
+                            <h3 th:text="${totalOrders}"></h3>
                             <p>Pedidos Realizados</p>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                             <i class="fas fa-dollar-sign text-success"></i>
                         </div>
                         <div class="stat-content">
-                            <h3>R$ 68.450,00</h3>
+                            <h3 th:text="${'R$ ' + #numbers.formatDecimal(totalSales, 1, 'POINT', 2, 'COMMA')}"></h3>
                             <p>Total em Vendas</p>
                         </div>
                     </div>
@@ -129,28 +129,15 @@
                         </div>
                         <div class="card-content">
                             <div class="activity-list">
-                                <div class="activity-item">
-                                    <i class="fas fa-shopping-cart text-success"></i>
+                                <div class="activity-item" th:each="order : ${recentOrders}">
+                                    <i class="fas fa-shopping-cart text-success"
+                                        th:classappend="${order.status.name() == 'DELIVERED' ? 'text-success' :
+                                                          order.status.name() == 'CANCELLED' ? 'text-danger' :
+                                                          'text-warning'}"></i>
                                     <div>
-                                        <strong>Pedido #125</strong>
-                                        <span>Maria Santos</span>
-                                        <small>R$ 450,00 - Entregue</small>
-                                    </div>
-                                </div>
-                                <div class="activity-item">
-                                    <i class="fas fa-shopping-cart text-warning"></i>
-                                    <div>
-                                        <strong>Pedido #124</strong>
-                                        <span>Carlos Oliveira</span>
-                                        <small>R$ 1.200,00 - Em Transporte</small>
-                                    </div>
-                                </div>
-                                <div class="activity-item">
-                                    <i class="fas fa-shopping-cart text-danger"></i>
-                                    <div>
-                                        <strong>Pedido #123</strong>
-                                        <span>Ana Costa</span>
-                                        <small>R$ 320,00 - Cancelado</small>
+                                        <strong th:text="${'Pedido #' + order.id}"></strong>
+                                        <span th:text="${order.user.firstName + ' ' + order.user.lastName}"></span>
+                                        <small th:text="${'R$ ' + #numbers.formatDecimal(order.totalValue, 1, 'POINT', 2, 'COMMA') + ' - ' + order.status.description}"></small>
                                     </div>
                                 </div>
                             </div>
@@ -163,20 +150,10 @@
                         </div>
                         <div class="card-content">
                             <div class="product-ranking">
-                                <div class="ranking-item">
-                                    <span class="rank">1º</span>
-                                    <span class="product-name">Notebook Dell Inspiron 15</span>
-                                    <span class="sales-count">45 vendas</span>
-                                </div>
-                                <div class="ranking-item">
-                                    <span class="rank">2º</span>
-                                    <span class="product-name">Mouse Gamer RGB</span>
-                                    <span class="sales-count">38 vendas</span>
-                                </div>
-                                <div class="ranking-item">
-                                    <span class="rank">3º</span>
-                                    <span class="product-name">Teclado Mecânico</span>
-                                    <span class="sales-count">32 vendas</span>
+                                <div class="ranking-item" th:each="entry, iterStart : ${topProducts}">
+                                    <span class="rank" th:text="${iterStart.index + 1 + 'º'}"></span>
+                                    <span class="product-name" th:text="${entry.key.name}"></span>
+                                    <span class="sales-count" th:text="${entry.value + ' vendas'}"></span>
                                 </div>
                             </div>
                         </div>
