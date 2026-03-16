@@ -14,19 +14,4 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping("/dashboard")
-    public String dashboard(Model model, HttpSession session) {
-
-        if (session.getAttribute("currentUser") == null) {
-            System.out.println("User not logged in. Redirecting to SignIn.");
-            return "redirect:/signin";
-        }
-
-        User currentUser = (User) session.getAttribute("currentUser");
-
-        model.addAttribute("adminSection","dashboard");
-        model.addAttribute("currentUser", currentUser);
-        return "admin";
-    }
-
 }
