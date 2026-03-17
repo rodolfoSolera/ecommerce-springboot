@@ -3,7 +3,7 @@ package com.ecommerce.controller;
 import com.ecommerce.model.Category;
 import com.ecommerce.model.Product;
 import com.ecommerce.model.User;
-import com.ecommerce.repository.ProductRepository;
+import com.ecommerce.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomeController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @GetMapping("/")
     public String home(Model model, HttpSession session, @RequestParam(required = false) Category category) {
@@ -40,15 +40,10 @@ public class HomeController {
             model.addAttribute("cartTotalValue", session.getAttribute("cartTotalValue"));
         }
 
-        Iterable<Product> products;
-
-        if (category != null) {
-            products = productRepository.findByCategory(category);
-        } else {
-            products = productRepository.findAll();
-        }
+        Iterable<Product> products = productService.findAllProducts(category);
 
         model.addAttribute("products", products);
+        model.addAttribute("currentUser", currentUser);
 
         return "index";
     }

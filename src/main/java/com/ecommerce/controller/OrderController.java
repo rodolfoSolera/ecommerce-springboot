@@ -3,7 +3,7 @@ package com.ecommerce.controller;
 import com.ecommerce.model.Order;
 import com.ecommerce.model.OrderItem;
 import com.ecommerce.model.User;
-import com.ecommerce.repository.OrderRepository;
+import com.ecommerce.service.OrderService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ import java.util.List;
 public class OrderController {
 
     @Autowired
-    public OrderRepository orderRepository;
+    public OrderService orderService;
 
     @GetMapping
     public String order(Model model, @RequestParam(required = false) Order.OrderStatus status, HttpSession session) {
@@ -32,21 +32,7 @@ public class OrderController {
         User currentUser = (User) session.getAttribute("currentUser");
         boolean isAdmin = "admin@admin.com".equalsIgnoreCase(currentUser.getEmail());
 
-        Iterable<Order> orders;
-
-        if (isAdmin) {
-            if (status != null) {
-                orders = orderRepository.findAllByStatus(status);
-            } else {
-                orders = orderRepository.findAll();
-            }
-        } else {
-            if (status != null) {
-                orders = orderRepository.findAllByStatusAndUserId(status, currentUser.getId());
-            } else {
-                orders = orderRepository.findAllByUserId(currentUser.getId());
-            }
-        }
+        Iterable<Order> orders = orderService.findAllByStatus(isAdmin,status,currentUser);
 
         model.addAttribute("ordersFilter", status != null ? status : "ALL");
         model.addAttribute("status", Order.OrderStatus.values());
@@ -133,7 +119,7 @@ public class OrderController {
             order.addItem(item);
         }
 
-        orderRepository.save(order);
+        orderService.createdOrUpdate(order);
 
         session.setAttribute("orderSuccess", true);
         session.setAttribute("orderId", order.getId());
