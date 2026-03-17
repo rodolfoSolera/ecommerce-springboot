@@ -3,7 +3,7 @@ package com.ecommerce.controller;
 import com.ecommerce.model.Category;
 import com.ecommerce.model.Product;
 import com.ecommerce.model.User;
-import com.ecommerce.repository.ProductRepository;
+import com.ecommerce.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class ProductController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @GetMapping("/product")
     public String product(Model model, @RequestParam(required = false) Category category, HttpSession session) {
@@ -41,13 +41,7 @@ public class ProductController {
             model.addAttribute("product", new Product());
         }
 
-        Iterable<Product> products;
-
-        if (category != null) {
-            products = productRepository.findByCategory(category);
-        } else {
-            products = productRepository.findAll();
-        }
+        Iterable<Product> products = productService.findAllProducts(category);
 
         model.addAttribute("categoriesFilter", category != null ? category : "ALL");
         model.addAttribute("categories", Category.values());
@@ -59,13 +53,13 @@ public class ProductController {
     @PostMapping("/product/save")
     public String saveProduct(@ModelAttribute Product product) {
         System.out.println("Saving product " + product);
-        productRepository.save(product);
+        productService.createdOrUpdate(product);
         return "redirect:/product";
     }
 
     @GetMapping("/product/edit/{id}")
     public String editProduct(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        Optional<Product> product = productRepository.findById(id);
+        Optional<Product> product = productService.findById(id);
 
         if (product.isPresent()) {
             System.out.println("Product found ID: " + id);
@@ -81,7 +75,7 @@ public class ProductController {
     public String deleteProduct(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         System.out.println("Deleting product with ID: " + id);
 
-        Optional<Product> product = productRepository.findById(id);
+        Optional<Product> product = productService.findById(id);
 
         if (product.isPresent()) {
             System.out.println("Product ID: " + id + "deleted");
@@ -96,7 +90,7 @@ public class ProductController {
 
     @GetMapping("/product/delete/confirmation/{id}")
     public String confirmationDelete(@PathVariable Long id) {
-        productRepository.deleteById(id);
+        productService.deleteById(id);
         return "redirect:/product";
     }
 }

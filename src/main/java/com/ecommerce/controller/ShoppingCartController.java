@@ -1,7 +1,7 @@
 package com.ecommerce.controller;
 
 import com.ecommerce.model.Product;
-import com.ecommerce.repository.ProductRepository;
+import com.ecommerce.service.ProductService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +16,7 @@ import java.util.*;
 public class ShoppingCartController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @GetMapping("/add")
     public String addToCart(@RequestParam Long productId, HttpSession session) {
@@ -25,7 +25,7 @@ public class ShoppingCartController {
             return "redirect:/signin";
         }
 
-        Optional<Product> productOptional = productRepository.findById(productId);
+        Optional<Product> productOptional = productService.findById(productId);
         if (productOptional.isEmpty()) {
             System.out.println("Product with ID " + productId + " not found.");
             return "redirect:/";

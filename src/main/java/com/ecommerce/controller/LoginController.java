@@ -2,6 +2,7 @@ package com.ecommerce.controller;
 
 import java.util.Optional;
 
+import com.ecommerce.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.ecommerce.model.User;
-import com.ecommerce.repository.UserRepository;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,7 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class LoginController {
     
     @Autowired
-    public UserRepository userRepository;
+    public UserService userService;
 
     @GetMapping("/signin")
     public String signIn() {
@@ -43,7 +43,7 @@ public class LoginController {
 
         System.out.println("Attempting signin for email: " + email);
 
-        Optional<User> userOptional = userRepository.findByEmail(email);
+        Optional<User> userOptional = userService.findByEmail(email);
         
         if (userOptional.isEmpty()) {
             System.out.println("E-mail not found");
