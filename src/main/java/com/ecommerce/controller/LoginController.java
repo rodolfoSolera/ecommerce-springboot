@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.ecommerce.entity.User;
+import com.ecommerce.model.User;
 import com.ecommerce.repository.UserRepository;
 
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,9 +1,9 @@
 package com.ecommerce.controller;
 
-import com.ecommerce.entity.Order;
-import com.ecommerce.entity.OrderItem;
-import com.ecommerce.entity.Product;
-import com.ecommerce.entity.User;
+import com.ecommerce.model.Order;
+import com.ecommerce.model.OrderItem;
+import com.ecommerce.model.Product;
+import com.ecommerce.model.User;
 import com.ecommerce.repository.OrderRepository;
 import com.ecommerce.repository.ProductRepository;
 import com.ecommerce.repository.UserRepository;

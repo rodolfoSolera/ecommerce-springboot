@@ -1,6 +1,6 @@
-package com.ecommerce.initializer;
+package com.ecommerce.config;
 
-import com.ecommerce.entity.User;
+import com.ecommerce.model.User;
 import com.ecommerce.repository.UserRepository;
 import org.springframework.context.ApplicationContext;
 import org.springframework.beans.factory.annotation.Autowired;

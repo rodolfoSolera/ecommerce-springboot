@@ -1,8 +1,8 @@
 package com.ecommerce.controller;
 
-import com.ecommerce.entity.Category;
-import com.ecommerce.entity.Product;
-import com.ecommerce.entity.User;
+import com.ecommerce.model.Category;
+import com.ecommerce.model.Product;
+import com.ecommerce.model.User;
 import com.ecommerce.repository.ProductRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;

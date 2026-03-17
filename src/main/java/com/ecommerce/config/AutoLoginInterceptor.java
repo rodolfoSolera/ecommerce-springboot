@@ -1,6 +1,6 @@
-package com.ecommerce.initializer;
+package com.ecommerce.config;
 
-import com.ecommerce.entity.User;
+import com.ecommerce.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;

@@ -1,7 +1,7 @@
-package com.ecommerce.initializer;
+package com.ecommerce.config;
 
-import com.ecommerce.entity.*;
-import com.ecommerce.entity.User.UserStatus;
+import com.ecommerce.model.*;
+import com.ecommerce.model.User.UserStatus;
 
 import com.ecommerce.repository.OrderRepository;
 import com.ecommerce.repository.ProductRepository;

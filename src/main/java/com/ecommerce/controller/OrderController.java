@@ -1,12 +1,10 @@
 package com.ecommerce.controller;
 
-import com.ecommerce.entity.Order;
-import com.ecommerce.entity.OrderItem;
-import com.ecommerce.entity.User;
+import com.ecommerce.model.Order;
+import com.ecommerce.model.OrderItem;
+import com.ecommerce.model.User;
 import com.ecommerce.repository.OrderRepository;
-import com.ecommerce.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
-import org.h2.engine.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

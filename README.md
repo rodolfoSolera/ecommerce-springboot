@@ -8,18 +8,39 @@ O projeto está sendo desenvolvido de forma incremental, utilizando **issues**, 
 
 ## 🚀 Tecnologias Utilizadas
 
+### Backend:
+
 - **Java 25** – Linguagem principal do projeto
+
 - **Spring Boot** – Framework para criação da aplicação
-- **Spring MVC** – Camada web (controllers e views)
-- **Spring Security** – Autenticação, autorização e controle de acesso
-- **Spring Data JPA** – Persistência de dados
-- **Hibernate** – Implementação do JPA (ORM)
-- **Thymeleaf** – Template engine para as páginas HTML
+
+- **Spring MVC** – Camada web (controllers e rotas)
+
+- **Spring Security** – Autenticação e controle de acesso
+
+### Persistência de Dados:
+
+- **Spring Data JPA** – Abstração para acesso a dados
+
+- **Hibernate** – Implementação ORM do JPA
+
 - **PostgreSQL** – Banco de dados relacional
-- **Gradle** – Gerenciamento de dependências
-- **JUnit** – Framework para testes automatizados em Java
-- **Mockito** – Mock de dependências para testes
+
+### Frontend:
+
+- **Thymeleaf** – Template engine para renderização de páginas HTML
+
+### Ferramentas e DevOps:
+
+- **Gradle** – Gerenciamento de dependências e build
+
 - **Docker** – Containerização da aplicação e do banco de dados
+
+### Testes:
+
+- **JUnit** – Framework de testes unitários
+
+- **Mockito** – Mock de dependências para testes
 
 ---
 
@@ -27,11 +48,11 @@ O projeto está sendo desenvolvido de forma incremental, utilizando **issues**, 
 
 O projeto segue o padrão de **arquitetura em camadas**, separando responsabilidades para facilitar manutenção, testes e escalabilidade.
 
+- **Config** → Configuração/Base de dados ficticios.
 - **Controller** → Recebe requisições HTTP
-- **Service** → Contém a regra de negócio
+- **Model** → Representação das tabelas
 - **Repository** → Comunicação com o banco de dados
-- **Entity** → Representação das tabelas
-- **Initializer** → Base de dados ficticios
+- **Service** → Contém a regra de negócio
 
 ---
 
@@ -42,14 +63,14 @@ Abaixo está a estrutura principal do projeto:
 
 ### 📁 Pacotes
 
+- [`config`](src/main/java/com/ecommerce/config)  
+  Configuração/Base de dados ficticios.
+
 - [`controller`](src/main/java/com/ecommerce/controller)  
   Controllers responsáveis por rotas web e APIs REST.
 
-- [`entity`](src/main/java/com/ecommerce/entity)  
+- [`model`](src/main/java/com/ecommerce/model)  
   Entidades JPA (Hibernate) mapeadas para o banco de dados.
-
-- [`initializer`](src/main/java/com/ecommerce/initializer)  
-  Base de dados ficticios.
 
 - [`repository`](src/main/java/com/ecommerce/repository)  
   Interfaces JPA para acesso aos dados.
@@ -68,6 +89,8 @@ Abaixo está a estrutura principal do projeto:
 - Inicialização automática de dados (data initializer)
 - Integração com banco de dados PostgreSQL
 - Estrutura preparada para carrinho de compras e pedidos
+- Carrinho de compras e pedidos
+- Dashboard administrativo
 
 ---
 
@@ -75,11 +98,9 @@ Abaixo está a estrutura principal do projeto:
 
 O projeto está sendo desenvolvido com base em **issues**, abordando:
 
-- Carrinho de compras e pedidos
 - APIs REST
 - Testes unitários e de integração
 - Docker e Docker Compose
-- Dashboard administrativo
 - Melhorias de segurança e tratamento de erros
 
 ---
@@ -89,7 +110,10 @@ O projeto está sendo desenvolvido com base em **issues**, abordando:
 ### Pré-requisitos
 - Java 25
 - Gradle
-- PostgreSQL (ou Docker)
+- PostgreSQL
+
+### Opcional
+- Docker (para rodar o PostgreSQL em container)
 
 ### Executar localmente
 
