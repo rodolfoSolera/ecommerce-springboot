@@ -34,4 +34,17 @@ public class OrderService {
     public Order createdOrUpdate(Order order) {
         return orderRepository.save(order);
     }
+
+    public double totalSales() {
+        Iterable<Order> allOrders = orderRepository.findAll();
+        return calculateTotalSales(allOrders);
+    }
+
+    private double calculateTotalSales(Iterable<Order> orders) {
+        double total = 0.0;
+        for (Order order : orders) {
+            total += order.getTotalValue();
+        }
+        return total;
+    }
 }

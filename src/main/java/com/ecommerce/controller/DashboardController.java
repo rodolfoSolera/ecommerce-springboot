@@ -63,6 +63,11 @@ public class DashboardController {
         return "admin";
     }
 
+    private double totalSales() {
+        Iterable<Order> allOrders = orderRepository.findAll();
+        return calculateTotalSales(allOrders);
+    }
+
     private double calculateTotalSales(Iterable<Order> orders) {
         double total = 0.0;
         for (Order order : orders) {
