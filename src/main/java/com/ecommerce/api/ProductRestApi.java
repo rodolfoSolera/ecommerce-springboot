@@ -1,12 +1,11 @@
 package com.ecommerce.api;
 
-import com.ecommerce.dto.ProductDTO;
+import com.ecommerce.dto.ProductResponseDTO;
+import com.ecommerce.dto.ProductUpdatePriceRequestDTO;
 import com.ecommerce.model.Product;
 import com.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.StreamSupport;
@@ -19,10 +18,16 @@ public class ProductRestApi {
     private ProductService productService;
 
     @GetMapping
-    public List<ProductDTO> getAllProducts() {
+    public List<ProductResponseDTO> getAllProducts() {
         Iterable<Product> products = productService.findAllProducts(null);
         return StreamSupport.stream(products.spliterator(), false)
-                .map(ProductDTO::fromProduct)
+                .map(ProductResponseDTO::fromProduct)
                 .toList();
+    }
+
+    @PutMapping("/{id}/price")
+    public ProductResponseDTO productUpdatePrice(@PathVariable Long id, @RequestBody ProductUpdatePriceRequestDTO request) {
+        Product product = productService.productUpdatePrice(id, request.price());
+        return ProductResponseDTO.fromProduct(product);
     }
 }

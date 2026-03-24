@@ -46,4 +46,15 @@ public class UserService {
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    public User updateStatus(Long id, User.UserStatus status) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setStatus(status);
+            return userRepository.save(user);
+        } else {
+            throw new RuntimeException("User not found with id: " + id);
+        }
+    }
 }
