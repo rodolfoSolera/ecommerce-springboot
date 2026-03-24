@@ -47,8 +47,9 @@ public class Product {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public Product setPrice(Double price) {
         this.price = price;
+        return null;
     }
 
     public String getState() {

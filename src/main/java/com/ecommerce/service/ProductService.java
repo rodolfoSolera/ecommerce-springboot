@@ -37,4 +37,15 @@ public class ProductService {
     public void deleteById(Long id) {
         productRepository.deleteById(id);
     }
+
+    public Product productUpdatePrice(Long id, Double price) {
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        if(optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            product.setPrice(price);
+            return productRepository.save(product);
+        } else {
+            throw new RuntimeException("Product with id: " + id + " not found!");
+        }
+    }
 }

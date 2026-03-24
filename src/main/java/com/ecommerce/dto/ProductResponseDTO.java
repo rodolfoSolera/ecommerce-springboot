@@ -3,7 +3,7 @@ package com.ecommerce.dto;
 import com.ecommerce.model.Category;
 import com.ecommerce.model.Product;
 
-public record ProductDTO(
+public record ProductResponseDTO(
         Long id,
         String name,
         Category category,
@@ -11,8 +11,8 @@ public record ProductDTO(
         String state,
         String description
 ) {
-    public static ProductDTO fromProduct(Product product) {
-        return new ProductDTO(
+    public static ProductResponseDTO fromProduct(Product product) {
+        return new ProductResponseDTO(
                 product.getId(),
                 product.getName(),
                 product.getCategory(),

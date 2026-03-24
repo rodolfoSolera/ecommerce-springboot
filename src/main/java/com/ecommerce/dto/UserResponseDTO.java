@@ -2,17 +2,20 @@ package com.ecommerce.dto;
 
 import com.ecommerce.model.User;
 
-public record UserDTO(
+public record UserResponseDTO(
         Long id,
         String email,
-        String fullName
+        String fullName,
+        User.UserStatus status
+
 ) {
-    public static UserDTO fromUsers(User user) {
+    public static UserResponseDTO fromUsers(User user) {
         String fullName = user.getFirstName() + " " + user.getLastName();
-        return new UserDTO(
+        return new UserResponseDTO(
                 user.getId(),
                 user.getEmail(),
-                fullName
+                fullName,
+                user.getStatus()
         );
     }
 }
