@@ -10,11 +10,11 @@ O projeto está sendo desenvolvido de forma incremental, utilizando **issues**, 
 
 ### Backend:
 
-- **Java 25** – Linguagem principal do projeto
+- **Java 21 (LTS)** – Linguagem principal do projeto
 
-- **Spring Boot** – Framework para criação da aplicação
+- **Spring Boot 3.3.5** – Framework para criação da aplicação
 
-- **Spring MVC** – Camada web (controllers e rotas)
+- **Spring Web (Spring MVC)** – Camada web (controllers e rotas)
 
 - **Spring Security** – Autenticação e controle de acesso
 
@@ -38,9 +38,7 @@ O projeto está sendo desenvolvido de forma incremental, utilizando **issues**, 
 
 ### Testes:
 
-- **JUnit** – Framework de testes unitários
-
-- **Mockito** – Mock de dependências para testes
+- **Spring Boot Starter Test (JUnit + Mockito)**
 
 ---
 
@@ -63,11 +61,17 @@ Abaixo está a estrutura principal do projeto:
 
 ### 📁 Pacotes
 
+- [`api`](src/main/java/com/ecommerce/api)  
+  Camada responsável pela exposição das APIs REST (endpoints da aplicação).
+
 - [`config`](src/main/java/com/ecommerce/config)  
   Configuração/Base de dados ficticios.
 
 - [`controller`](src/main/java/com/ecommerce/controller)  
   Controllers responsáveis por rotas web e APIs REST.
+
+- [`dto`](src/main/java/com/ecommerce/dto)  
+  Objetos de transferência de dados usados para comunicação entre camadas e com o cliente (request/response).
 
 - [`model`](src/main/java/com/ecommerce/model)  
   Entidades JPA (Hibernate) mapeadas para o banco de dados.
@@ -108,7 +112,7 @@ O projeto está sendo desenvolvido com base em **issues**, abordando:
 ## ▶️ Como Executar o Projeto
 
 ### Pré-requisitos
-- Java 25
+- Java 21
 - Gradle
 - PostgreSQL
 
@@ -117,6 +121,14 @@ O projeto está sendo desenvolvido com base em **issues**, abordando:
 
 ### Executar localmente
 
+## ⚠️ Compatibilidade
+
+Este projeto utiliza:
+
+- Java 21 (LTS)
+- Spring Boot 3.3.x
+
+Versões mais recentes (como Java 25 ou Spring Boot 4) podem não ser compatíveis com todas as dependências.
 
 📌 Observações
 

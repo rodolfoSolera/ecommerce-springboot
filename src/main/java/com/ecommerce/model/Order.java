@@ -38,6 +38,14 @@ public class Order {
     public Order() {
         this.createdAt = LocalDateTime.now();
         this.status = OrderStatus.PENDING;
+        this.paymentMethod = PaymentMethod.PIX;
+    }
+
+    public Order(User user) {
+        this.user = user;
+        this.createdAt = LocalDateTime.now();
+        this.status = OrderStatus.PENDING;
+        this.paymentMethod = PaymentMethod.PIX;
     }
 
     public Order(User user, Double totalValue, Integer totalItems) {
