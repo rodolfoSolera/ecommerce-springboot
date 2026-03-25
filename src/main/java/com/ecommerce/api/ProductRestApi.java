@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
+import static org.springframework.http.HttpStatus.NO_CONTENT;
+
 @RestController
 @RequestMapping("/api/products")
 public class ProductRestApi {
@@ -29,5 +31,11 @@ public class ProductRestApi {
     public ProductResponseDTO productUpdatePrice(@PathVariable Long id, @RequestBody ProductUpdatePriceRequestDTO request) {
         Product product = productService.productUpdatePrice(id, request.price());
         return ProductResponseDTO.fromProduct(product);
+    }
+
+    @ResponseStatus(NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable Long id) {
+        productService.deleteById(id);
     }
 }

@@ -18,9 +18,9 @@ public class ProductService {
         Iterable<Product> products;
 
         if (category != null) {
-            products = productRepository.findByCategory(category);
+            products = productRepository.findByCategoryAndStatus(category, Product.ProductStatus.CREATED);
         } else {
-            products = productRepository.findAll();
+            products = productRepository.findAllByStatus(Product.ProductStatus.CREATED);
         }
 
         return products;
@@ -35,7 +35,11 @@ public class ProductService {
     }
 
     public void deleteById(Long id) {
-        productRepository.deleteById(id);
+
+        Product product = productRepository.findById(id)
+                        .orElseThrow(() -> new RuntimeException("Product with id: " + id + " not found!"));
+
+        productRepository.save(product.delete());
     }
 
     public Product productUpdatePrice(Long id, Double price) {

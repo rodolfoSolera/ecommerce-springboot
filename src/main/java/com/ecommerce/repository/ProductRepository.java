@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
-
-    Iterable<Product> findByCategory(Category category);
+    Iterable<Product> findAllByStatus(Product.ProductStatus status);
+    Iterable<Product> findByCategoryAndStatus(Category category, Product.ProductStatus status);
 }

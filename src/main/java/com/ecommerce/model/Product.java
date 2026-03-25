@@ -13,10 +13,18 @@ public class Product {
     @Enumerated(EnumType.STRING)
     private Category category;
     private Double price;
-    private String state;
+
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status;
     private String description;
 
     public Product() {
+        this.status = ProductStatus.CREATED;
+    }
+
+    public Product delete() {
+        this.status = ProductStatus.DELETED;
+        return this;
     }
 
     public Long getId() {
@@ -52,12 +60,12 @@ public class Product {
         return null;
     }
 
-    public String getState() {
-        return state;
+    public ProductStatus getStatus() {
+        return status;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setStatus(ProductStatus status) {
+        this.status = status;
     }
 
     public String getDescription() {
@@ -75,8 +83,24 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", price=" + price +
-                ", state='" + state + '\'' +
+                ", state='" + status + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    public enum ProductStatus {
+        CREATED("Criado"),
+        DELETED("Deletado"),
+        SUSPENDED("Suspenso");
+
+        private final String description;
+
+        ProductStatus(String description) {
+            this.description = description;
+        }
+
+        public String getDescription() {
+            return description;
+        }
     }
 }
