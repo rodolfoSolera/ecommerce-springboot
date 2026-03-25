@@ -95,6 +95,7 @@ Abaixo está a estrutura principal do projeto:
 - Estrutura preparada para carrinho de compras e pedidos
 - Carrinho de compras e pedidos
 - Dashboard administrativo
+- APIs REST
 
 ---
 
@@ -102,7 +103,6 @@ Abaixo está a estrutura principal do projeto:
 
 O projeto está sendo desenvolvido com base em **issues**, abordando:
 
-- APIs REST
 - Testes unitários e de integração
 - Docker e Docker Compose
 - Melhorias de segurança e tratamento de erros

@@ -347,7 +347,7 @@ public class DataInitializer implements CommandLineRunner {
         product.setName(name);
         product.setCategory(category);
         product.setPrice(price);
-        product.setState("ativo");
+        product.setStatus(Product.ProductStatus.CREATED);
         product.setDescription(description);
 
         return product;

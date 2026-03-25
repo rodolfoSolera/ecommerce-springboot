@@ -17,7 +17,7 @@ public record ProductResponseDTO(
                 product.getName(),
                 product.getCategory(),
                 product.getPrice(),
-                product.getState(),
+                product.getStatus().name(),
                 product.getDescription()
         );
     }
