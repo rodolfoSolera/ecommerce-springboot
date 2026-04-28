@@ -113,7 +113,7 @@ O projeto está sendo desenvolvido com base em **issues**, abordando:
 
 ### Pré-requisitos
 - Java 21
-- Gradle
+- Gradle 9+
 - PostgreSQL
 
 ### Opcional
