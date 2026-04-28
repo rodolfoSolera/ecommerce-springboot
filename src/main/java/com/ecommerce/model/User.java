@@ -37,6 +37,8 @@ public class User {
     private LocalDateTime createdAt;
     
     public User() {
+        this.active();
+        this.createdAt = LocalDateTime.now();
     }
 
 
@@ -146,6 +148,21 @@ public class User {
 
     public User active() {
         this.status = UserStatus.ACTIVE;
+        return this;
+    }
+
+    public User inactive() {
+        this.status = UserStatus.INACTIVE;
+        return this;
+    }
+
+    public User blocked() {
+        this.status = UserStatus.BLOCKED;
+        return this;
+    }
+
+    public User suspended() {
+        this.status = UserStatus.SUSPENDED;
         return this;
     }
 
