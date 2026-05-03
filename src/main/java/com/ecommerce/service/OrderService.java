@@ -74,7 +74,7 @@ public class OrderService {
                     .orElseThrow(() -> new RuntimeException("Product not found with id: " + itemRequest.productId()));
 
             double unitPrice = product.getPrice();
-            double subTotal = unitPrice + itemRequest.quantity();
+            double subTotal = unitPrice * itemRequest.quantity();
 
             OrderItem orderItem = new OrderItem();
             orderItem.setProduct(product);
