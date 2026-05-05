@@ -32,6 +32,13 @@ public class DataInitializer implements CommandLineRunner {
 
         System.out.println("DataInitializer run method executed");
 
+        if (productRepository.count() > 0) {
+            System.out.println("Dados ja existem no banco, pulando inicializacao...");
+            return;
+        }
+
+        System.out.println("Inicializando dados no banco...");
+
         productRepository.saveAll(Arrays.asList(
                 
                 // =========================
