@@ -23,7 +23,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web' // ✅ correto
 	implementation 'org.jspecify:jspecify:1.0.0'
-	runtimeOnly 'com.h2database:h2'
+//	runtimeOnly 'com.h2database:h2' Documentado dependencia h2
+    runtimeOnly 'org.postgresql:postgresql'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
